@@ -17,6 +17,10 @@
         {
         }
 
+        public IDbSet<Test> Tests { get; set; }
+
+        public IDbSet<Organisation> Organisations { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

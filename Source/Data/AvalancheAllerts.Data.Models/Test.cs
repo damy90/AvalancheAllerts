@@ -32,7 +32,7 @@ namespace AvalancheAllerts.Data.Models
         public DateTime Date { get; set; }
 
         [Required]
-        public string TestResults { get; set; }
+        public string TestResultsDescription { get; set; }
 
         [Range(1, 5)]
         public int DangerLevel { get; set; }

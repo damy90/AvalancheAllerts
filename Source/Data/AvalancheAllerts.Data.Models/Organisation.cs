@@ -12,16 +12,20 @@ namespace AvalancheAllerts.Data.Models
 
     public class Organisation : BaseModel<int>
     {
-        [Required]
-        [MinLength(2)]
-        [MaxLength(15)]
-        public string Name { get; set; }
-
         public Organisation()
         {
             this.Users = new HashSet<ApplicationUser>();
             this.Tests = new HashSet<Test>();
         }
+
+        [Required]
+        [MinLength(2)]
+        [MaxLength(15)]
+        public string Name { get; set; }
+
+        [MinLength(5)]
+        [MaxLength(170)]
+        public string Description { get; set; }
 
         public virtual ICollection<ApplicationUser> Users { get; set; }
 

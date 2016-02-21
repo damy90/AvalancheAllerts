@@ -23,7 +23,7 @@ namespace AvalancheAllerts.Data.Models
         [MaxLength(25)]
         public string Place { get; set; }
 
-        public GeoCoordinate Position { get; set; }
+        public virtual GeoCoordinate Position { get; set; }
 
         /*[Required]
         public DateTime Date { get; set; }*/

@@ -6,15 +6,48 @@
 <h1>Home</h1>
 
 
+@model List<AvalancheAllerts.Data.Models.Test>
 <div class="row">
+    <input type="number" id="radius" value="50"/>
+    <button id="filter">Filter</button>
     @Html.Partial("_TestsMapView")
 
     <script type="text/javascript">
-    $(document).ready(function () {
-        $.getJSON("/Tests/GetAll", null, function (data) {
-            var elementId = 'map';
-            printMap(elementId, data);
+        var map;
+
+        $(document).ready(function () {
+            map = buildMap('map');
+            var radius = $('#radius').val();
+            ShowNearby(radius);
         });
-    });
+
+        $('#filter').click(function() {
+            var radius = $('#radius').val();
+            ShowNearby(radius);
+        })
+
+        function ShowNearby(radius) {
+
+            /*if (!navigator.geolocation) {
+                output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+                return;
+            }*/
+
+            function success(position) {
+                
+                var request = { lat: position.coords.latitude, lon: position.coords.longitude, radius: radius }
+                $.getJSON("/Tests/Nearby", request, function(data) {
+                    printMap(map, data);
+                });
+            };
+
+            function error() {
+                $.getJSON("/Tests/GetAll", null, function(data) {
+                    printMap(map, data);
+                });
+            };
+
+            navigator.geolocation.getCurrentPosition(success, error);
+        }
     </script>
 </div>

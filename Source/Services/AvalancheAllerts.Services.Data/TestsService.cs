@@ -8,6 +8,7 @@ namespace AvalancheAllerts.Services.Data
 {
     using AvalancheAllerts.Data.Common;
     using AvalancheAllerts.Data.Models;
+    using System.Device.Location;
 
     public class TestsService : ITestsService
     {
@@ -36,6 +37,15 @@ namespace AvalancheAllerts.Services.Data
         public IQueryable<Test> GetByOrganisation(string organisationName)
         {
             return this.tests.All().Where(t => t.Organisations.FirstOrDefault(o => o.Name == organisationName) != null);
+        }
+
+        public IQueryable<Test> FilterRadius(GeoCoordinate position, int radius)
+        {
+            //TODO: fix performance
+            return this.tests.All()
+                .ToList()
+                .Where(t => t.Position.GetDistanceTo(position) <= radius)
+                .AsQueryable();
         }
 
         public IQueryable<Test> Filter(DateTime startDate, DateTime endDate, List<string> organisationNames, List<string> userNames)

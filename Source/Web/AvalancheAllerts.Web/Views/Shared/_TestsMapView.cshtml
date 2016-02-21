@@ -8,9 +8,14 @@
 </div>
 
 <script>
-    function printMap(elementId, tests) {
+    function buildMap(elementId) {
         L.mapbox.accessToken = 'pk.eyJ1IjoiZGFueTkwdG0iLCJhIjoiY2lpMGE3eW8xMDBjYXcxa3N1NjdvdHd3NiJ9.h83bG5gr14GXwhGrODE-Mw';
-        var map = L.mapbox.map('map', 'mapbox.streets');
+        return L.mapbox.map(elementId, 'mapbox.streets');
+    }
+
+    function printMap(map, tests) {
+        /*L.mapbox.accessToken = 'pk.eyJ1IjoiZGFueTkwdG0iLCJhIjoiY2lpMGE3eW8xMDBjYXcxa3N1NjdvdHd3NiJ9.h83bG5gr14GXwhGrODE-Mw';
+        var map = L.mapbox.map('map', 'mapbox.streets');*/
 
 
         //position
@@ -18,22 +23,6 @@
             setView: false,
             maxZoom: 16
         });
-
-        /*function onLocationFound(e) {
-            var radius = e.accuracy / 2;
-
-            L.marker(e.latlng).addTo(map)
-                .bindPopup("You are within " + radius + " meters from this point. Position: " + e.latlng).openPopup();
-
-            L.circle(e.latlng, radius).addTo(map);
-        }
-
-        function onLocationError(e) {
-            alert(e.message);
-        }
-
-        map.on('locationfound', onLocationFound);
-        map.on('locationerror', onLocationError);*/
 
         var dangerLevel1Icon = L.icon({
             iconUrl: 'Contrent/images/1.png',

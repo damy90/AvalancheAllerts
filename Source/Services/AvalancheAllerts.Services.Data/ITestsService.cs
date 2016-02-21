@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace AvalancheAllerts.Services.Data
 {
+    using System.Device.Location;
+
     using AvalancheAllerts.Data.Models;
 
     public interface ITestsService
@@ -17,6 +19,8 @@ namespace AvalancheAllerts.Services.Data
         IQueryable<Test> GetByUser(string userName);
 
         IQueryable<Test> GetByOrganisation(string organisationName);
+
+        IQueryable<Test> FilterRadius(GeoCoordinate position, int radius);
 
         IQueryable<Test> Filter(
             DateTime startDate,

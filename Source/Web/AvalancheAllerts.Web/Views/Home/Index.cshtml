@@ -2,7 +2,19 @@
 @{
     ViewBag.Title = "Home Page";
 }
+
 <h1>Home</h1>
+
+
 <div class="row">
-    
+    @Html.Partial("_TestsMapView")
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $.getJSON("/Tests/GetAll", null, function (data) {
+            var elementId = 'map';
+            printMap(elementId, data);
+        });
+    });
+    </script>
 </div>

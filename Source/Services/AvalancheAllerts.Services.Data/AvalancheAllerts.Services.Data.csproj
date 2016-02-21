@@ -63,6 +63,7 @@
     <Compile Include="ITestsService.cs" />
     <Compile Include="OrganisationsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Data\AvalancheAllerts.Data.Common\AvalancheAllerts.Data.Common.csproj">

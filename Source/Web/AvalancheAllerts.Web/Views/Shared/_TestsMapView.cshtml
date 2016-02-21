@@ -1,0 +1,81 @@
+﻿<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+<script src="https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js"></script>
+@*<link href="https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css" rel="stylesheet" />*@
+
+<div>
+    <div id="map"></div>
+</div>
+
+<script>
+    function printMap(elementId, tests) {
+        L.mapbox.accessToken = 'pk.eyJ1IjoiZGFueTkwdG0iLCJhIjoiY2lpMGE3eW8xMDBjYXcxa3N1NjdvdHd3NiJ9.h83bG5gr14GXwhGrODE-Mw';
+        var map = L.mapbox.map('map', 'mapbox.streets');
+
+
+        //position
+        map.locate({
+            setView: false,
+            maxZoom: 16
+        });
+
+        /*function onLocationFound(e) {
+            var radius = e.accuracy / 2;
+
+            L.marker(e.latlng).addTo(map)
+                .bindPopup("You are within " + radius + " meters from this point. Position: " + e.latlng).openPopup();
+
+            L.circle(e.latlng, radius).addTo(map);
+        }
+
+        function onLocationError(e) {
+            alert(e.message);
+        }
+
+        map.on('locationfound', onLocationFound);
+        map.on('locationerror', onLocationError);*/
+
+        var dangerLevel1Icon = L.icon({
+            iconUrl: 'Contrent/images/1.png',
+            //shadowUrl: 'leaf-shadow.png',
+
+            iconSize: [98, 70], // size of the icon
+            //shadowSize: [50, 64], // size of the shadow
+            iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+            //shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+
+        var LeafIcon = L.Icon.extend({
+            options: {
+                //shadowUrl: 'leaf-shadow.png',
+                iconSize: [98, 70],
+                //shadowSize: [50, 64],
+                iconAnchor: [22, 84],
+                //shadowAnchor: [4, 62],
+                popupAnchor: [-3, -76]
+            }
+        });
+
+        var dangerLevelIcons = [
+            new LeafIcon({ iconUrl: 'Content/images/1.png' }),
+            new LeafIcon({ iconUrl: 'Content/images/2.png' }),
+            new LeafIcon({ iconUrl: 'Content/images/3.png' }),
+            new LeafIcon({ iconUrl: 'Content/images/4.png' }),
+            new LeafIcon({ iconUrl: 'Content/images/5.png' })
+        ];
+
+        L.icon = function (options) {
+            return new L.Icon(options);
+        };
+
+        var group = [];
+        for (var i in tests) {
+            group[i] = L.marker([tests[i].Latitude, tests[i].Longitude], { icon: dangerLevelIcons[tests[i].DangerLevel - 1] }).addTo(map).bindPopup(tests[i].Place);
+        }
+
+        group = new L.featureGroup(group);
+
+        map.fitBounds(group.getBounds());
+    }
+</script>

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace AvalancheAllerts.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
+    using System.Device.Location;
 
     using AvalancheAllerts.Data.Common.Models;
 
@@ -22,11 +23,7 @@ namespace AvalancheAllerts.Data.Models
         [MaxLength(25)]
         public string Place { get; set; }
 
-        public float? Latitude { get; set; }
-
-        public float? Longitude { get; set; }
-
-        public float? Elevation { get; set; }
+        public GeoCoordinate Position { get; set; }
 
         /*[Required]
         public DateTime Date { get; set; }*/

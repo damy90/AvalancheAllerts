@@ -43,7 +43,7 @@ namespace AvalancheAllerts.Web.Areas.Administration.Controllers
         // GET: Administration/OrganisationsAdmin/Details/5
         public ActionResult Details(int id)
         {
-            var organisation = this.Organisations.GetAll()
+            var organisation = this.Organisations.GetAll()//.ToList().AsQueryable()
                 .To<OrganisationDetailsModel>()
                 .FirstOrDefault(x => x.Id == id);
             if (organisation == null)

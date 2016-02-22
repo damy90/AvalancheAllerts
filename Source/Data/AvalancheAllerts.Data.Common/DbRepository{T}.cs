@@ -2,6 +2,7 @@
 {
     using System;
     using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
     using System.Linq;
 
     using AvalancheAllerts.Data.Common.Models;
@@ -49,6 +50,17 @@
         {
             entity.IsDeleted = true;
             entity.DeletedOn = DateTime.Now;
+        }
+
+        public void Update(T entity)
+        {
+            DbEntityEntry entry = this.Context.Entry(entity);
+            if (entry.State == EntityState.Detached)
+            {
+                this.DbSet.Attach(entity);
+            }
+
+            entry.State = EntityState.Modified;
         }
 
         public void HardDelete(T entity)

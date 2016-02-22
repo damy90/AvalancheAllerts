@@ -201,6 +201,7 @@
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\AdministrationController.cs" />
     <Compile Include="Areas\Administration\Controllers\OrganisationsAdminController.cs" />
+    <Compile Include="Controllers\OrganisationsController.cs" />
     <Compile Include="ViewModels\Organisation\OrganisationCreateModel.cs" />
     <Compile Include="ViewModels\Organisation\OrganisationDetailsModel.cs" />
     <Compile Include="ViewModels\Organisation\OrganisationEditModel.cs" />
@@ -262,11 +263,11 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Areas\Administration\Views\web.config" />
     <Content Include="Areas\Administration\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Administration\Views\OrganisationsAdmin\Create.cshtml" />
+    <Content Include="Views\Organisations\Create.cshtml" />
     <Content Include="Areas\Administration\Views\OrganisationsAdmin\Delete.cshtml" />
-    <Content Include="Areas\Administration\Views\OrganisationsAdmin\Details.cshtml" />
-    <Content Include="Areas\Administration\Views\OrganisationsAdmin\Edit.cshtml" />
-    <Content Include="Areas\Administration\Views\OrganisationsAdmin\Index.cshtml" />
+    <Content Include="Views\Organisations\Details.cshtml" />
+    <Content Include="Views\Organisations\Edit.cshtml" />
+    <Content Include="Views\Organisations\Index.cshtml" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.0.js" />
     <Content Include="Scripts\jquery-2.2.0.min.js" />

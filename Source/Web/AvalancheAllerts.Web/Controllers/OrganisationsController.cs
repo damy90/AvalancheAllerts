@@ -9,6 +9,7 @@ namespace AvalancheAllerts.Web.Controllers
     using AvalancheAllerts.Data.Models;
     using AvalancheAllerts.Services.Data;
     using AvalancheAllerts.Web.Infrastructure.Mapping;
+    using AvalancheAllerts.Web.ViewModels.Generic;
     using AvalancheAllerts.Web.ViewModels.Organisation;
 
     using Microsoft.AspNet.Identity;
@@ -21,17 +22,43 @@ namespace AvalancheAllerts.Web.Controllers
         {
             this.Organisations = organisations;
         }
-        
-        public ActionResult Index()
-        {
-            var organisations = this.Organisations.GetAll()
-                .Where(x => x.IsDeleted == false)
-                .To<OrganisationViewModel>()
-                .ToList();
 
-            return View(organisations);
+        [HttpGet]
+        public ActionResult Index(int page = 1, int pageSize = 3)
+        {
+            ItemsPageModel<OrganisationViewModel> model;
+            if (this.HttpContext.Cache["Organisations_" + page] != null)
+            {
+                model = (ItemsPageModel<OrganisationViewModel>)this.HttpContext.Cache["Organisations_" + page];
+
+            }
+            else
+            {
+                var organisationsCount = this.Organisations.GetAll().Count();
+                var totalPages = (int)Math.Ceiling(organisationsCount / (decimal)pageSize);
+                var itemsToSkip = (page - 1) * pageSize;
+                var organisations = this.Organisations.GetAll()
+                    .Where(x => x.IsDeleted == false)
+                    .OrderBy(x => x.Tests.Count)
+                    .Skip(itemsToSkip)
+                    .Take(pageSize)
+                    .To<OrganisationViewModel>()
+                    .ToList();
+
+                model = new ItemsPageModel<OrganisationViewModel>()
+                {
+                    CurrentPage = page,
+                    TotalPages = totalPages,
+                    Items = organisations
+                };
+
+                //this.HttpContext.Cache["Feedback page_" + page] = model;
+            }
+
+
+            return View(model);
         }
-        
+
         public ActionResult Details(int id)
         {
             var organisation = this.Organisations.GetAll()//.ToList().AsQueryable()
@@ -49,7 +76,7 @@ namespace AvalancheAllerts.Web.Controllers
         {
             return View();
         }
-        
+
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -70,10 +97,10 @@ namespace AvalancheAllerts.Web.Controllers
                 this.Organisations.SaveChanges();
                 return this.RedirectToAction("Index");
             }
-            
+
             return View(organisation);
         }
-        
+
         [Authorize]
         public ActionResult Edit(int id)
         {

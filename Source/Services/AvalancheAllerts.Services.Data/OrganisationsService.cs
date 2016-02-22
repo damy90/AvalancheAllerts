@@ -33,5 +33,25 @@ namespace AvalancheAllerts.Services.Data
         {
             return this.organisations.GetById(id);
         }
+
+        public void Add(Organisation organisation)
+        {
+            this.organisations.Add(organisation);
+        }
+
+        public void SaveChanges()
+        {
+            this.organisations.Save();
+        }
+
+        public void Update(Organisation organisation)
+        {
+            this.organisations.Update(organisation);
+        }
+
+        public void Delete(Organisation organisation)
+        {
+            this.organisations.Delete(organisation);
+        }
     }
 }

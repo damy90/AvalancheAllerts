@@ -15,5 +15,13 @@ namespace AvalancheAllerts.Services.Data
         IQueryable<Organisation> GetByUser(string userName);
 
         Organisation GetById(int id);
+
+        void Add(Organisation organisation);
+
+        void SaveChanges();
+
+        void Update(Organisation organisation);
+
+        void Delete(Organisation organisation);
     }
 }

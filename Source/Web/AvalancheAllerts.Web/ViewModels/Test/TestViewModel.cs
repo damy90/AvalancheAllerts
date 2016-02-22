@@ -1,4 +1,4 @@
-﻿namespace AvalancheAllerts.Web.ViewModels
+﻿namespace AvalancheAllerts.Web.ViewModels.Test
 {
     using System;
     using System.ComponentModel.DataAnnotations;

@@ -52,5 +52,7 @@
                 }
             }
         }
+
+        //public System.Data.Entity.DbSet<AvalancheAllerts.Data.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

@@ -81,16 +81,69 @@
                 context.Tests.Add(test3);
             }
 
+
+            if (!context.Organisations.Any())
+            {
+                var org = new Organisation()
+                {
+                    Name = "ПСС",
+                    Description = "Планинска спасителна служба",
+                    OwnerId = context.Users.FirstOrDefault().Id
+                };
+
+                context.Organisations.Add(org);
+
+                org = new Organisation()
+                {
+                    Name = "BASES",
+                    OwnerId = context.Users.FirstOrDefault().Id
+                };
+
+                context.Organisations.Add(org);
+
+                org = new Organisation()
+                {
+                    Name = "me6tosi",
+                    OwnerId = context.Users.FirstOrDefault().Id
+                };
+
+                context.Organisations.Add(org);
+
+                org = new Organisation()
+                {
+                    Name = "bla bla",
+                    OwnerId = context.Users.FirstOrDefault().Id
+                };
+
+                context.Organisations.Add(org);
+
+                org = new Organisation()
+                {
+                    Name = "organisation",
+                    OwnerId = context.Users.FirstOrDefault().Id
+                };
+
+                context.Organisations.Add(org);
+
+                org = new Organisation()
+                {
+                    Name = "Greanpeace",
+                    OwnerId = context.Users.FirstOrDefault().Id
+                };
+
+                context.Organisations.Add(org);
+            }
+
             try
             {
                 context.SaveChanges();
             }
             catch (Exception ex)
             {
-                
+
                 throw ex;
             }
-            
+
         }
     }
 }

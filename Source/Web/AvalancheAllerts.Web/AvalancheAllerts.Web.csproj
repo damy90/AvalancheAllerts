@@ -200,6 +200,11 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\AdministrationController.cs" />
+    <Compile Include="Areas\Administration\Controllers\OrganisationsAdminController.cs" />
+    <Compile Include="ViewModels\Organisation\OrganisationCreateModel.cs" />
+    <Compile Include="ViewModels\Organisation\OrganisationDetailsModel.cs" />
+    <Compile Include="ViewModels\Organisation\OrganisationEditModel.cs" />
+    <Compile Include="ViewModels\Organisation\OrganisationViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -228,7 +233,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Manage\SetPasswordViewModel.cs" />
     <Compile Include="ViewModels\Manage\VerifyPhoneNumberViewModel.cs" />
-    <Compile Include="ViewModels\TestViewModel.cs" />
+    <Compile Include="ViewModels\Test\TestViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -257,6 +262,11 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Areas\Administration\Views\web.config" />
     <Content Include="Areas\Administration\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Administration\Views\OrganisationsAdmin\Create.cshtml" />
+    <Content Include="Areas\Administration\Views\OrganisationsAdmin\Delete.cshtml" />
+    <Content Include="Areas\Administration\Views\OrganisationsAdmin\Details.cshtml" />
+    <Content Include="Areas\Administration\Views\OrganisationsAdmin\Edit.cshtml" />
+    <Content Include="Areas\Administration\Views\OrganisationsAdmin\Index.cshtml" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.0.js" />
     <Content Include="Scripts\jquery-2.2.0.min.js" />

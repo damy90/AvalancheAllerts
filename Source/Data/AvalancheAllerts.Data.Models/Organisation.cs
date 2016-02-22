@@ -27,7 +27,7 @@ namespace AvalancheAllerts.Data.Models
         [MaxLength(170)]
         public string Description { get; set; }
 
-        public Guid OwnerId { get; set; }
+        public string OwnerId { get; set; }
 
         public virtual ApplicationUser Owner { get; set; }
 

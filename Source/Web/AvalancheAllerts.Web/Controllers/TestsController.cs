@@ -11,6 +11,7 @@ namespace AvalancheAllerts.Web.Controllers
     using AvalancheAllerts.Services.Data;
     using AvalancheAllerts.Web.Infrastructure.Mapping;
     using AvalancheAllerts.Web.ViewModels;
+    using AvalancheAllerts.Web.ViewModels.Test;
 
     public class TestsController : Controller
     {

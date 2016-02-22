@@ -21,8 +21,7 @@ namespace AvalancheAllerts.Web.Controllers
         {
             this.Organisations = organisations;
         }
-
-        // GET: Administration/OrganisationsAdmin
+        
         public ActionResult Index()
         {
             var organisations = this.Organisations.GetAll()
@@ -32,8 +31,7 @@ namespace AvalancheAllerts.Web.Controllers
 
             return View(organisations);
         }
-
-        // GET: Administration/OrganisationsAdmin/Details/5
+        
         public ActionResult Details(int id)
         {
             var organisation = this.Organisations.GetAll()//.ToList().AsQueryable()
@@ -46,14 +44,12 @@ namespace AvalancheAllerts.Web.Controllers
             return this.View(organisation);
         }
 
-        // GET: Administration/OrganisationsAdmin/Create
+        // GET: OrganisationsAdmin/Create
         public ActionResult Create()
         {
-            //ViewBag.OwnerId = new SelectList(db.Users, "Id", "Email");
             return View();
         }
-
-        // POST: Administration/OrganisationsAdmin/Create
+        
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -74,12 +70,11 @@ namespace AvalancheAllerts.Web.Controllers
                 this.Organisations.SaveChanges();
                 return this.RedirectToAction("Index");
             }
-
-            //ViewBag.OwnerId = new SelectList(db.Users, "Id", "Email", organisation.OwnerId);
+            
             return View(organisation);
         }
-
-        // GET: Administration/OrganisationsAdmin/Edit/5
+        
+        [Authorize]
         public ActionResult Edit(int id)
         {
             var organisation = this.Organisations.GetAll().To<OrganisationViewModel>().FirstOrDefault(o => o.Id == id);
@@ -87,6 +82,12 @@ namespace AvalancheAllerts.Web.Controllers
             if (organisation == null)
             {
                 return HttpNotFound();
+            }
+
+            if (User.Identity.GetUserName() != organisation.Owner)
+            {
+                //TODO: unauthorized error
+                return this.RedirectToAction("Index", "Home");
             }
 
             //ViewBag.OwnerId = new SelectList(db.Users, "Id", "Email", organisation.OwnerId);
@@ -97,12 +98,19 @@ namespace AvalancheAllerts.Web.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,OwnerId,CreatedOn,ModifiedOn,IsDeleted,DeletedOn")] OrganisationEditModel organisation)
         {
             if (ModelState.IsValid)
             {
                 var entity = this.Organisations.GetById(organisation.Id);
+                if (User.Identity.GetUserName() != entity.Owner.UserName)
+                {
+                    //TODO: unauthorized error
+                    return this.RedirectToAction("Index", "Home");
+                }
+
                 entity.Description = organisation.Description;
                 entity.Name = organisation.Name;
 

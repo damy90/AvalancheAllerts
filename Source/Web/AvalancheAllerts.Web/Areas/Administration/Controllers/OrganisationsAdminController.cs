@@ -11,6 +11,7 @@ using AvalancheAllerts.Data.Models;
 
 namespace AvalancheAllerts.Web.Areas.Administration.Controllers
 {
+    using AvalancheAllerts.Common;
     using AvalancheAllerts.Services.Data;
     using AvalancheAllerts.Web.Controllers;
     using AvalancheAllerts.Web.Infrastructure.Mapping;
@@ -18,6 +19,7 @@ namespace AvalancheAllerts.Web.Areas.Administration.Controllers
 
     using Microsoft.AspNet.Identity;
 
+    [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
     public class OrganisationsAdminController : BaseController
     {
         private readonly IOrganisationsService Organisations;

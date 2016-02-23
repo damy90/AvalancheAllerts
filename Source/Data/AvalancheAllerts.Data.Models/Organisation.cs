@@ -12,6 +12,7 @@ namespace AvalancheAllerts.Data.Models
 
     public class Organisation : BaseModel<int>
     {
+        private ApplicationUser owner;
         public Organisation()
         {
             this.Users = new HashSet<ApplicationUser>();
@@ -29,7 +30,19 @@ namespace AvalancheAllerts.Data.Models
 
         public string OwnerId { get; set; }
 
-        public virtual ApplicationUser Owner { get; set; }
+        public virtual ApplicationUser Owner
+        {
+            get
+            {
+                return this.owner;
+            }
+
+            set
+            {
+                this.owner = value;
+                this.Users.Add(this.owner);
+            }
+        }
 
         public virtual ICollection<ApplicationUser> Users { get; set; }
 

@@ -57,17 +57,19 @@
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Organisation>()
+                .HasMany(x => x.Users)
+                .WithMany(u=>u.Organisations)
+                .Map(
+                    m =>
+                        {
+                            m.MapLeftKey("AspNetUsers.Id");
+                            m.MapRightKey("Organisation.Id");
+                            m.ToTable("UsersOrganisations");
+                        });
+
             base.OnModelCreating(modelBuilder);
-        }
-
-        private double? EnsureIsNotNaN(double? param)
-        {
-            if (double.IsNaN((double)param))
-            {
-                param = null;
-            }
-
-            return param;
         }
         //public System.Data.Entity.DbSet<AvalancheAllerts.Data.Models.ApplicationUser> ApplicationUsers { get; set; }
     }

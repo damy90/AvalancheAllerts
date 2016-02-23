@@ -41,7 +41,7 @@ namespace AvalancheAllerts.Services.Data
 
         public IQueryable<Test> FilterRadius(GeoCoordinate position, int radius)
         {
-            //TODO: fix performance
+            //TODO: fix performance (remove ToList)
             return this.tests.All()
                 .Where(t => t.Latitude != null && t.Longitude != null)
                 .ToList()
@@ -51,8 +51,8 @@ namespace AvalancheAllerts.Services.Data
 
         private double Distance(double positionLat, double positionLon, double pointLat, double pointLon)
         {
-            var position = new GeoCoordinate(positionLat, positionLon, 1000);
-            var point = new GeoCoordinate(pointLat, pointLon, 1000);
+            var position = new GeoCoordinate(positionLat, positionLon);
+            var point = new GeoCoordinate(pointLat, pointLon);
 
             return position.GetDistanceTo(point);
         }

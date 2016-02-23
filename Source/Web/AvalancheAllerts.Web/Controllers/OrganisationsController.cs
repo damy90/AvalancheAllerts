@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace AvalancheAllerts.Web.Controllers
 {
+    using AvalancheAllerts.Common;
     using AvalancheAllerts.Data.Models;
     using AvalancheAllerts.Services.Data;
     using AvalancheAllerts.Web.Infrastructure.Mapping;
@@ -110,7 +111,7 @@ namespace AvalancheAllerts.Web.Controllers
                 return HttpNotFound();
             }
 
-            if (User.Identity.GetUserName() != organisation.Owner)
+            if (!(this.User.Identity.GetUserName() == organisation.Owner || this.User.IsInRole(GlobalConstants.AdministratorRoleName)))
             {
                 //TODO: unauthorized error
                 return this.RedirectToAction("Index", "Home");

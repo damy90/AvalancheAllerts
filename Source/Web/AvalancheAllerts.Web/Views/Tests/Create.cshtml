@@ -71,6 +71,8 @@
         </div>
     </div>
 }
+
+<button id="getPosition">Get current position</button>
 <div id="out"></div>
 @Html.Partial("_TestsMapView")
 
@@ -91,7 +93,7 @@
             ShowNearby(radius, data);
         });*/
 
-        geoFindMe();
+        $('#getPosition').on("click", geoFindMe);
     });
 
     function geoFindMe() {

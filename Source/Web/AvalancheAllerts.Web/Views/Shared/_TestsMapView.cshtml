@@ -1,9 +1,10 @@
-﻿<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+﻿
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 <script src="https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js"></script>
 @*<link href="https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css" rel="stylesheet" />*@
 <script src="~/Scripts/lib/leaflet-search.js"></script>
-<link rel="stylesheet" href="http://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.css"/>
+<link rel="stylesheet" href="http://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.css" />
 <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false"></script>
 <div>
     <div id="map"></div>
@@ -78,13 +79,14 @@
             new LeafIcon({ iconUrl: 'Content/images/5.png' })
         ];
 
-        L.icon = function(options) {
+        L.icon = function (options) {
             return new L.Icon(options);
         };
 
         var group = [];
         for (var i in tests) {
-            group[i] = L.marker([tests[i].Latitude, tests[i].Longitude], { icon: dangerLevelIcons[tests[i].DangerLevel - 1] }).addTo(map).bindPopup(tests[i].Place);
+            group[i] = L.marker([tests[i].Latitude, tests[i].Longitude], { icon: dangerLevelIcons[tests[i].DangerLevel - 1] }).addTo(map)
+                .bindPopup(tests[i].Place + '<br/><a href="Tests/Details/' + tests[i].Id + '">Details</a>');
         }
 
         group = new L.featureGroup(group);

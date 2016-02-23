@@ -10,6 +10,7 @@ namespace AvalancheAllerts.Web.Controllers
 
     using AutoMapper;
 
+    using AvalancheAllerts.Common;
     using AvalancheAllerts.Data.Models;
     using AvalancheAllerts.Services.Data;
     using AvalancheAllerts.Web.Infrastructure.Mapping;
@@ -69,6 +70,38 @@ namespace AvalancheAllerts.Web.Controllers
             }
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Details(int id)
+        {
+            var result = this.Tests.GetAll().Where(x => x.IsDeleted == false).To<TestDetailsModel>().FirstOrDefault(t => t.Id == id);
+
+            if (result == null)
+            {
+                return this.HttpNotFound();
+            }
+
+            return this.View(result);
+        }
+
+        [Authorize]
+        public ActionResult Edit(int id)
+        {
+            var test = this.Tests.GetAll().To<TestCreateModel>().FirstOrDefault(o => o.Id == id);
+
+            if (test == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (!(this.User.Identity.GetUserName() == test.Author || this.User.IsInRole(GlobalConstants.AdministratorRoleName)))
+            {
+                //TODO: unauthorized error
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            //ViewBag.OwnerId = new SelectList(db.Users, "Id", "Email", organisation.OwnerId);
+            return View("Create", test);
         }
     }
 }

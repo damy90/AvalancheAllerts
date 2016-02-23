@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace AvalancheAllerts.Services.Data
 {
+    using AvalancheAllerts.Data;
     using AvalancheAllerts.Data.Common;
     using AvalancheAllerts.Data.Models;
 
@@ -17,11 +18,16 @@ namespace AvalancheAllerts.Services.Data
     {
         private readonly IDbRepository<Organisation> organisations;
 
+        //private readonly ApplicationDbContext users;
+
+        private readonly IDbGenericRepository<ApplicationUser, string> users; 
+
         //private readonly UserStore userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
 
-        public OrganisationsService(IDbRepository<Organisation> organisations)
+        public OrganisationsService(IDbRepository<Organisation> organisations, IDbGenericRepository<ApplicationUser, string> users)
         {
             this.organisations = organisations;
+            this.users = users;
         }
 
         public IQueryable<Organisation> GetAll()
@@ -31,7 +37,7 @@ namespace AvalancheAllerts.Services.Data
 
         public IQueryable<Organisation> GetByUser(string userName)
         {
-            return this.organisations.All().Where(o => o.Users.FirstOrDefault(u => u.Email == userName) != null);
+            return this.organisations.All(); //.Where(o => o.Users.FirstOrDefault(u => u.Email == userName) != null);
         }
 
         public Organisation GetById(int id)
@@ -60,10 +66,10 @@ namespace AvalancheAllerts.Services.Data
         }
 
         public void Join(int organisationId, string userId)
-        {/*
-            var 
-            var userManager = new UserManager<ApplicationUser>(userStore);*/
-            throw new NotImplementedException();
+        {
+            var user = this.users.GetById(userId);
+            var entity = this.organisations.GetById(organisationId);
+            entity.Users.Add(user);
         }
     }
 }

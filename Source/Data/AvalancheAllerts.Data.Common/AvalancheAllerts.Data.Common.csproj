@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbRepository{T}.cs" />
+    <Compile Include="GenericRepository.cs" />
     <Compile Include="IDbRepository{T}.cs" />
     <Compile Include="Models\BaseModel{TKey}.cs" />
     <Compile Include="Models\IAuditInfo.cs" />

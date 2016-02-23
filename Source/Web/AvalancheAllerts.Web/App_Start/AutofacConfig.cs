@@ -7,12 +7,16 @@
     using Autofac;
     using Autofac.Integration.Mvc;
 
+    using AvalancheAllerts.Data.Models;
     using AvalancheAllerts.Services.Data;
 
     using Controllers;
 
     using Data;
     using Data.Common;
+
+    using Microsoft.AspNet.Identity.EntityFramework;
+
     using Services.Web;
 
     public static class AutofacConfig
@@ -47,12 +51,16 @@
 
         private static void RegisterServices(ContainerBuilder builder)
         {
+            //var context = ;
             builder.Register(x => new ApplicationDbContext())
                 .As<DbContext>()
                 .InstancePerRequest();
             builder.Register(x => new HttpCacheService())
                 .As<ICacheService>()
                 .InstancePerRequest();
+            /*builder.Register(x => context)
+                .As<IdentityDbContext<ApplicationUser>>()
+                .InstancePerRequest();*/
             builder.Register(x => new IdentifierProvider())
                 .As<IIdentifierProvider>()
                 .InstancePerRequest();
@@ -62,6 +70,10 @@
 
             builder.RegisterGeneric(typeof(DbRepository<>))
                 .As(typeof(IDbRepository<>))
+                .InstancePerRequest();
+
+            builder.RegisterGeneric(typeof(GenericRepository<,>))
+                .As(typeof(IDbGenericRepository<,>))
                 .InstancePerRequest();
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())

@@ -64,17 +64,13 @@
                 .Map(
                     m =>
                         {
-                            m.MapLeftKey("AspNetUsers.Id");
-                            m.MapRightKey("Organisation.Id");
-                            m.ToTable("UsersOrganisations");
+                            m.MapLeftKey("OrganisationId");
+                            m.MapRightKey("UserId");
+                            m.ToTable("UserOrganisations");
                         });
 
             base.OnModelCreating(modelBuilder);
         }
         //public System.Data.Entity.DbSet<AvalancheAllerts.Data.Models.ApplicationUser> ApplicationUsers { get; set; }
-    }
-
-    public class ModelBuilder
-    {
     }
 }

@@ -242,6 +242,7 @@
     <Compile Include="ViewModels\Test\TestCreateModel.cs" />
     <Compile Include="ViewModels\Test\TestDetailsModel.cs" />
     <Compile Include="ViewModels\Test\TestViewModel.cs" />
+    <Compile Include="ViewModels\User\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

@@ -15,11 +15,14 @@
         {
             this.Tests = new HashSet<Test>();
             this.Organisations = new HashSet<Organisation>();
+            //this.UsersOrganisations = new HashSet<UserOrganisation>();
         }
 
         public virtual ICollection<Test> Tests { get; set; }
 
         public virtual ICollection<Organisation> Organisations { get; set; }
+
+        //public virtual ICollection<UserOrganisation> UsersOrganisations { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

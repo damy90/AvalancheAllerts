@@ -77,6 +77,10 @@
       <Project>{048df115-fad9-4bd4-9ba0-d99dfd32a2b2}</Project>
       <Name>AvalancheAllerts.Data.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Data\AvalancheAllerts.Data\AvalancheAllerts.Data.csproj">
+      <Project>{7c950cdc-9587-4b65-a204-988efed17948}</Project>
+      <Name>AvalancheAllerts.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AvalancheAllerts.Services.Web\AvalancheAllerts.Services.Web.csproj">
       <Project>{deab17a2-58c1-448c-8a66-d49c3af7fc6c}</Project>
       <Name>AvalancheAllerts.Services.Web</Name>

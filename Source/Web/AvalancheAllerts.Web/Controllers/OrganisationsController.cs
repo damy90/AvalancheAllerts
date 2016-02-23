@@ -14,15 +14,40 @@ namespace AvalancheAllerts.Web.Controllers
     using AvalancheAllerts.Web.ViewModels.Organisation;
 
     using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.Owin;
+    using Microsoft.Owin.Security;
 
     public class OrganisationsController : BaseController
     {
         private readonly IOrganisationsService Organisations;
 
+        private ApplicationUserManager userManager;
+
         public OrganisationsController(IOrganisationsService organisations)
         {
             this.Organisations = organisations;
         }
+
+        public OrganisationsController(IOrganisationsService organisations, ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            this.Organisations = organisations;
+            this.UserManager = userManager;
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return this.userManager ?? this.HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+
+            private set
+            {
+                this.userManager = value;
+            }
+        }
+
+        private IAuthenticationManager AuthenticationManager => this.HttpContext.GetOwinContext().Authentication;
 
         [HttpGet]
         public ActionResult Index(int page = 1, int pageSize = 3)
@@ -71,7 +96,7 @@ namespace AvalancheAllerts.Web.Controllers
             }
             return this.View(organisation);
         }
-        
+
         public ActionResult Create()
         {
             return View();
@@ -150,6 +175,45 @@ namespace AvalancheAllerts.Web.Controllers
                 this.Organisations.GetAll().To<OrganisationViewModel>().FirstOrDefault(o => o.Id == organisation.Id);
 
             return this.View(result);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult Join(int id)
+        {
+            var organisation = this.Organisations.GetById(id);
+            var memberIds = organisation.Users.Select(u => u.Id);
+            if (organisation != null && !memberIds.Contains(this.User.Identity.GetUserId()))
+            {
+                ApplicationUser me;
+                var myId = this.User.Identity.GetUserId();
+
+               /* try
+                {
+                     me = this.UserManager.Users
+                    .FirstOrDefault(u => u.Id == myId);
+                }
+                catch (Exception ex)
+                {
+                    
+                    throw ex;
+                }*/
+                
+                
+                this.Organisations.Join(organisation.Id, myId);
+
+                try
+                {
+                    this.Organisations.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+
+            return this.RedirectToAction("Details", new { id = organisation.Id });
         }
     }
 }

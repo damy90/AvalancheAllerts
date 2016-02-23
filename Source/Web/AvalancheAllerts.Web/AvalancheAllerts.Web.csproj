@@ -240,6 +240,7 @@
     <Compile Include="ViewModels\Manage\SetPasswordViewModel.cs" />
     <Compile Include="ViewModels\Manage\VerifyPhoneNumberViewModel.cs" />
     <Compile Include="ViewModels\Test\TestCreateModel.cs" />
+    <Compile Include="ViewModels\Test\TestDetailsModel.cs" />
     <Compile Include="ViewModels\Test\TestViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -326,6 +327,7 @@
     <Content Include="Views\Tests\Create.cshtml" />
     <Content Include="Views\Feedback\Create.cshtml" />
     <Content Include="Views\Feedback\Index.cshtml" />
+    <Content Include="Views\Tests\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

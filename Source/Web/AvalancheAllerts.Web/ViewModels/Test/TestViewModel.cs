@@ -7,14 +7,20 @@
     using AvalancheAllerts.Data.Models;
     using AvalancheAllerts.Web.Infrastructure.Mapping;
 
-    public class TestViewModel : TestCreateModel, IMapFrom<Test>
+    public class TestViewModel : IMapFrom<Test>
     {
         public int Id { get; set; }
+        
+        public string Place { get; set; }
+
+        public double? Latitude { get; set; }
+
+        public double? Longitude { get; set; }
+
+        public double? Altitude { get; set; }
+        
+        public int DangerLevel { get; set; }
 
         public DateTime CreatedOn { get; set; }
-
-        public DateTime? ModifiedOn { get; set; }
-
-        //TODO:username
     }
 }

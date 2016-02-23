@@ -1,0 +1,70 @@
+﻿@model AvalancheAllerts.Web.ViewModels.Test.TestDetailsModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Test</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Place)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Place)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DangerLevel)
+        </dt>
+
+        <dd>
+            <img src="~/Content/images/@(Model.DangerLevel).png" />
+            @Html.DisplayFor(model => model.DangerLevel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TestResultsDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TestResultsDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Altitude)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Altitude) m
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Author)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Author)
+        </dd>
+        @*TODO: organisations*@
+    </dl>
+</div>
+<p>
+    @if (User.Identity.IsAuthenticated && User.Identity.Name == Model.Author)
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+    }
+</p>

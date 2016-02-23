@@ -29,5 +29,13 @@ namespace AvalancheAllerts.Services.Data
             List<string> userNames);
 
         Test GetById(int id);
+
+        void Create(Test test);
+
+        void Update(Test test);
+
+        void Delete(Test test);
+
+        void SaveChanges();
     }
 }

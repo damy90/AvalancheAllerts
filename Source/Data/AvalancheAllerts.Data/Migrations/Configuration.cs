@@ -51,18 +51,18 @@
                     CreatedOn = DateTime.UtcNow,
                     DangerLevel = 2,
                     //avoiding NaN values
-                    Position = new GeoCoordinate(42.6042826, 23.3882316, 1700, 1, 1, 0, 0),
+                    Position = new GeoCoordinate(42.6042826, 23.3882316),
                     TestResultsDescription = "Q2, CT7",
                     Place = "Витоша Платото",
                     UserId = context.Users.FirstOrDefault().Id
                 };
-
+                
                 context.Tests.Add(test1);
                 var test2 = new Test()
                 {
                     CreatedOn = DateTime.UtcNow,
                     DangerLevel = 5,
-                    Position = new GeoCoordinate(42.5940509, 23.3201253, 1900, 1, 1, 0, 0),
+                    Position = new GeoCoordinate(42.5940509, 23.3201253, 1900),
                     TestResultsDescription = "Q0, CT3",
                     Place = "Витоша Черни Връх",
                     UserId = context.Users.FirstOrDefault().Id
@@ -73,14 +73,13 @@
                 {
                     CreatedOn = DateTime.UtcNow,
                     DangerLevel = 1,
-                    Position = new GeoCoordinate(42.113862, 23.4967623, 2900, 1, 1, 0, 0),
+                    Position = new GeoCoordinate(42.113862, 23.4967623, 2900),
                     TestResultsDescription = "Q3, CT13",
                     Place = "Рила: Маркуджик 3",
                     UserId = context.Users.FirstOrDefault().Id
                 };
                 context.Tests.Add(test3);
             }
-
 
             if (!context.Organisations.Any())
             {

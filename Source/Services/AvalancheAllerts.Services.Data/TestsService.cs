@@ -57,5 +57,25 @@ namespace AvalancheAllerts.Services.Data
         {
             return this.tests.GetById(id);
         }
+
+        public void Create(Test test)
+        {
+            this.tests.Add(test);
+        }
+
+        public void Update(Test test)
+        {
+            this.tests.Update(test);
+        }
+
+        public void Delete(Test test)
+        {
+            this.tests.Delete(test);
+        }
+
+        public void SaveChanges()
+        {
+            this.tests.Save();
+        }
     }
 }

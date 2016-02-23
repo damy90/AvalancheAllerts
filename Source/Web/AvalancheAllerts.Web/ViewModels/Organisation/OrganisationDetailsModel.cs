@@ -23,7 +23,7 @@
 
         public string Owner { get; set; }*/
 
-        public ICollection<TestViewModel> Tests { get; set; }
+        public IEnumerable<TestViewModel> Tests { get; set; }
 
         public override void CreateMappings(IMapperConfiguration configuration)
         {

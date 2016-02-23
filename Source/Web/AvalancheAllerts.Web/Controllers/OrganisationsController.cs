@@ -70,8 +70,7 @@ namespace AvalancheAllerts.Web.Controllers
             }
             return this.View(organisation);
         }
-
-        // GET: OrganisationsAdmin/Create
+        
         public ActionResult Create()
         {
             return View();

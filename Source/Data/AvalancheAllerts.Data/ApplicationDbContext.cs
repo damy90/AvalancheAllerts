@@ -55,17 +55,6 @@
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            /*modelBuilder.Entity<Test>().Property(m => m.Position.Latitude).IsOptional();
-            modelBuilder.Entity<Test>().Property(m => m.Position.Latitude).IsOptional();
-            modelBuilder.Entity<Test>().Property(m => m.Position.Longitude).IsOptional();
-            modelBuilder.Entity<Test>().Property(m => m.Position.Altitude).IsOptional();
-            modelBuilder.Entity<Test>().Property(m => m.Position.Course).IsOptional();
-            modelBuilder.Entity<Test>().Property(m => m.Position.HorizontalAccuracy).IsOptional();
-            modelBuilder.Entity<Test>().Property(m => m.Position.Speed).IsOptional();
-            modelBuilder.Entity<Test>().Property(m => m.Position.VerticalAccuracy).IsOptional();*/
-
-            modelBuilder.Configurations.Add(new Test.Testfiguration());
-            //modelBuilder.Entity<Test>().Property(m=>m.)
             base.OnModelCreating(modelBuilder);
         }
 

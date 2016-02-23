@@ -8,12 +8,17 @@ namespace AvalancheAllerts.Web.Controllers
 {
     using System.Device.Location;
 
+    using AutoMapper;
+
+    using AvalancheAllerts.Data.Models;
     using AvalancheAllerts.Services.Data;
     using AvalancheAllerts.Web.Infrastructure.Mapping;
     using AvalancheAllerts.Web.ViewModels;
     using AvalancheAllerts.Web.ViewModels.Test;
 
-    public class TestsController : Controller
+    using Microsoft.AspNet.Identity;
+
+    public class TestsController : BaseController
     {
         private readonly ITestsService Tests;
 
@@ -36,6 +41,34 @@ namespace AvalancheAllerts.Web.Controllers
             var result = this.Tests.FilterRadius(currentPosition, radius * 1000).Where(t => t.IsDeleted == false).To<TestViewModel>().ToList(); //to meters
 
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(TestCreateModel test)
+        {
+            if (this.ModelState.IsValid)
+            {
+                var entity = this.Mapper.Map<Test>(test);
+                entity.UserId = this.User.Identity.GetUserId();
+                this.Tests.Create(entity);
+                try
+                {
+                    this.Tests.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

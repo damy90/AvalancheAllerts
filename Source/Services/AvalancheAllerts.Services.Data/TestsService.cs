@@ -43,9 +43,18 @@ namespace AvalancheAllerts.Services.Data
         {
             //TODO: fix performance
             return this.tests.All()
+                .Where(t => t.Latitude != null && t.Longitude != null)
                 .ToList()
-                .Where(t => t.Position.GetDistanceTo(position) <= radius)
+                .Where(t => this.Distance(position.Latitude, position.Longitude, t.Latitude.Value, t.Longitude.Value) <= radius)
                 .AsQueryable();
+        }
+
+        private double Distance(double positionLat, double positionLon, double pointLat, double pointLon)
+        {
+            var position = new GeoCoordinate(positionLat, positionLon, 1000);
+            var point = new GeoCoordinate(pointLat, pointLon, 1000);
+
+            return position.GetDistanceTo(point);
         }
 
         public IQueryable<Test> Filter(DateTime startDate, DateTime endDate, List<string> organisationNames, List<string> userNames)

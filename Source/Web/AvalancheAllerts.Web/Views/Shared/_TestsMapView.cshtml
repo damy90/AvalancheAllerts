@@ -84,7 +84,7 @@
 
         var group = [];
         for (var i in tests) {
-            group[i] = L.marker([tests[i].Position.Latitude, tests[i].Position.Longitude], { icon: dangerLevelIcons[tests[i].DangerLevel - 1] }).addTo(map).bindPopup(tests[i].Place);
+            group[i] = L.marker([tests[i].Latitude, tests[i].Longitude], { icon: dangerLevelIcons[tests[i].DangerLevel - 1] }).addTo(map).bindPopup(tests[i].Place);
         }
 
         group = new L.featureGroup(group);

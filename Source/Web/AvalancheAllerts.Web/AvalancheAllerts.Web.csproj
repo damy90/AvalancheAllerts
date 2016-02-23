@@ -235,6 +235,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Manage\SetPasswordViewModel.cs" />
     <Compile Include="ViewModels\Manage\VerifyPhoneNumberViewModel.cs" />
+    <Compile Include="ViewModels\Test\TestCreateModel.cs" />
     <Compile Include="ViewModels\Test\TestViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -264,6 +265,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Areas\Administration\Views\web.config" />
     <Content Include="Areas\Administration\Views\_ViewStart.cshtml" />
+    <Content Include="Scripts\lib\get-location.js" />
     <Content Include="Views\Organisations\Create.cshtml" />
     <Content Include="Areas\Administration\Views\OrganisationsAdmin\Delete.cshtml" />
     <Content Include="Views\Organisations\Details.cshtml" />
@@ -314,9 +316,10 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Scripts\jquery-2.2.0.min.map" />
-    <Content Include="Views\Jokes\ById.cshtml" />
     <Content Include="Views\Shared\_TestsMapView.cshtml" />
     <Content Include="Views\Shared\MapRendering.cshtml" />
+    <Content Include="Views\Shared\_OrganisationsTable.cshtml" />
+    <Content Include="Views\Tests\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -324,7 +327,6 @@
     <Folder Include="Areas\Administration\Views\Shared\" />
     <Folder Include="ViewModels\Home\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Tests\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

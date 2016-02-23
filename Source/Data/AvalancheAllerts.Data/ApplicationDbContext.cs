@@ -21,6 +21,8 @@
 
         public IDbSet<Organisation> Organisations { get; set; }
 
+        public IDbSet<Feedback> Feedbacks { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

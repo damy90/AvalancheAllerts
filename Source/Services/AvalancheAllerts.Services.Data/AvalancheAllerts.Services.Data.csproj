@@ -60,6 +60,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FeedbackService.cs" />
+    <Compile Include="IFeedbackService.cs" />
     <Compile Include="IOrganisationsService.cs" />
     <Compile Include="ITestsService.cs" />
     <Compile Include="OrganisationsService.cs" />

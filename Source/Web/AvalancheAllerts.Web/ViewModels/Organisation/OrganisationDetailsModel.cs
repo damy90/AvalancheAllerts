@@ -17,12 +17,6 @@
             this.Tests = new List<TestViewModel>();
         }
 
-        /*public DateTime CreatedOn { get; set; }
-
-        public DateTime? ModifiedOn { get; set; }
-
-        public string Owner { get; set; }*/
-
         public IEnumerable<TestViewModel> Tests { get; set; }
 
         public override void CreateMappings(IMapperConfiguration configuration)

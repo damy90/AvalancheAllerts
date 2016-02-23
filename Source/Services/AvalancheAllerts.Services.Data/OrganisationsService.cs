@@ -10,9 +10,14 @@ namespace AvalancheAllerts.Services.Data
     using AvalancheAllerts.Data.Common;
     using AvalancheAllerts.Data.Models;
 
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+
     public class OrganisationsService : IOrganisationsService
     {
         private readonly IDbRepository<Organisation> organisations;
+
+        //private readonly UserStore userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
 
         public OrganisationsService(IDbRepository<Organisation> organisations)
         {
@@ -52,6 +57,13 @@ namespace AvalancheAllerts.Services.Data
         public void Delete(Organisation organisation)
         {
             this.organisations.Delete(organisation);
+        }
+
+        public void Join(int organisationId, string userId)
+        {/*
+            var 
+            var userManager = new UserManager<ApplicationUser>(userStore);*/
+            throw new NotImplementedException();
         }
     }
 }

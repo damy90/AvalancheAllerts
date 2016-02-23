@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using AvalancheAllerts.Common
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -26,6 +27,12 @@
                         <li>@Html.ActionLink("New Organisation", "Create", "Organisations", new { area = string.Empty }, null)</li>
                         <li>@Html.ActionLink("Submit Test", "Create", "Tests", new { area = string.Empty }, null)</li>
                         <li>@Html.ActionLink("Organisations", "Index", "Organisations", new { area = string.Empty }, null)</li>
+                        <li>@Html.ActionLink("Send Feedback", "Create", "Feedback", new { area = string.Empty }, null)</li>
+                        if (User.IsInRole(GlobalConstants.AdministratorRoleName))
+                        {
+                            <li>@Html.ActionLink("Feedback", "Index", "FeedbackAdmin", new { area = "Administration" }, null)</li>
+                        }
+
                     }
                     
                 </ul>

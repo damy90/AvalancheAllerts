@@ -199,7 +199,7 @@
     <Compile Include="App_Start\SmsService.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
-    <Compile Include="Areas\Administration\Controllers\AdministrationController.cs" />
+    <Compile Include="Areas\Administration\Controllers\FeedbackAdminController.cs" />
     <Compile Include="Areas\Administration\Controllers\OrganisationsAdminController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\OrganisationsController.cs" />
@@ -326,7 +326,7 @@
     <Content Include="Views\Shared\_OrganisationsTable.cshtml" />
     <Content Include="Views\Tests\Create.cshtml" />
     <Content Include="Views\Feedback\Create.cshtml" />
-    <Content Include="Views\Feedback\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\FeedbackAdmin\Index.cshtml" />
     <Content Include="Views\Tests\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>

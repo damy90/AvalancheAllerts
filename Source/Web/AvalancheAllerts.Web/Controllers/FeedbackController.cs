@@ -15,8 +15,6 @@ namespace AvalancheAllerts.Web.Controllers
 
     public class FeedbackController : BaseController
     {
-        private const int ItemsPerPage = 4;
-
         private readonly IFeedbackService feedback;
 
         public FeedbackController(IFeedbackService feedback)
@@ -55,40 +53,6 @@ namespace AvalancheAllerts.Web.Controllers
 
             this.TempData["Notification"] = "Thank you for your feedback!";
             return this.Redirect("/");
-        }
-
-        [HttpGet]
-        public ActionResult Index(int id = 1)
-        {
-            FeedBackListViewModel viewModel;
-            if (this.HttpContext.Cache["Feedback page_" + id] != null)
-            {
-                viewModel = (FeedBackListViewModel)this.HttpContext.Cache["Feedback page_" + id];
-            }
-            else
-            {
-                var page = id;
-                var allItemsCount = this.feedback.GetAll().Count();
-                var totalPages = (int)Math.Ceiling(allItemsCount / (decimal)ItemsPerPage);
-                var itemsToSkip = (page - 1) * ItemsPerPage;
-                var feedbacks = this.feedback.GetAll()
-                    .OrderBy(x => x.CreatedOn)
-                    .ThenBy(x => x.Id)
-                    .Skip(itemsToSkip)
-                    .Take(ItemsPerPage)
-                    .To<FeedbackViewModel>().ToList();
-
-                viewModel = new FeedBackListViewModel()
-                {
-                    CurrentPage = page,
-                    TotalPages = totalPages,
-                    FeedBacks = feedbacks
-                };
-
-                this.HttpContext.Cache["Feedback page_" + id] = viewModel;
-            }
-
-            return this.View(viewModel);
         }
     }
 }

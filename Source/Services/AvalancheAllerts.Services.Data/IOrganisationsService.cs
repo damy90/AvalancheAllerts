@@ -23,5 +23,7 @@ namespace AvalancheAllerts.Services.Data
         void Update(Organisation organisation);
 
         void Delete(Organisation organisation);
+
+        void Join(int organisationId, string userId);
     }
 }

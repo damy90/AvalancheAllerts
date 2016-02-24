@@ -172,7 +172,7 @@ namespace AvalancheAllerts.Web.Controllers
             if (ModelState.IsValid)
             {
                 var entity = this.Organisations.GetById(organisation.Id);
-                if (User.Identity.GetUserName() != entity.Owner.UserName)
+                if (!(this.User.Identity.GetUserName() == entity.Owner.UserName || this.User.IsInRole(GlobalConstants.AdministratorRoleName)))
                 {
                     //TODO: unauthorized error
                     return this.RedirectToAction("Index", "Home");

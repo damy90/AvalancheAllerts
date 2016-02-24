@@ -333,6 +333,8 @@
     <Content Include="Views\Shared\DisplayTemplates\OrganisationViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\OrganisationCreateModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\FeedbackInputModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\TestCreateModel.cshtml" />
+    <Content Include="Views\Tests\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

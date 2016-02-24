@@ -101,7 +101,28 @@ namespace AvalancheAllerts.Web.Controllers
             }
 
             //ViewBag.OwnerId = new SelectList(db.Users, "Id", "Email", organisation.OwnerId);
-            return View("Create", test);
+            return this.View("Edit", test);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,OwnerId,CreatedOn,ModifiedOn,IsDeleted,DeletedOn")] TestCreateModel organisation)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = this.Tests.GetAll().To<Test>().FirstOrDefault(x => x.Id == organisation.Id);
+                if (!(this.User.Identity.GetUserName() == entity.User.UserName || this.User.IsInRole(GlobalConstants.AdministratorRoleName)))
+                {
+                    //TODO: unauthorized error
+                    return this.RedirectToAction("Index", "Home");
+                }
+
+                this.Tests.Update(entity);
+                this.Tests.SaveChanges();;
+            }
+
+            return this.RedirectToAction("Index", "Home");
         }
     }
 }

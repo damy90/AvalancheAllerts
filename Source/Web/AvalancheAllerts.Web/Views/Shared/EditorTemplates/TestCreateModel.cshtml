@@ -1,0 +1,122 @@
+﻿@model AvalancheAllerts.Web.ViewModels.Test.TestCreateModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Organisation</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Place, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Place, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Place, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Latitude, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Latitude, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Latitude, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Longitude, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Longitude, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Longitude, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Altitude, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Altitude, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Altitude, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DangerLevel, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DangerLevel, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DangerLevel, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TestResultsDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TestResultsDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TestResultsDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<button id="getPosition">Get current position</button>
+<div id="out"></div>
+@Html.Partial("_TestsMapView")
+
+<div>
+    @Html.ActionLink("Back to Home", "Index", "Home")
+</div>
+
+<script>
+    var map;
+    //var controlSearch;
+
+    $(document).ready(function () {
+        map = buildMap('map');
+        //controlSearch = initMapSearch(map);
+
+        //var radius = $('#radius').val();
+        /*controlSearch.on('search_locationfound', function (data) {
+            ShowNearby(radius, data);
+        });*/
+
+        $('#getPosition').on("click", geoFindMe);
+    });
+
+    function geoFindMe() {
+        var output = document.getElementById("out");
+
+        if (!navigator.geolocation) {
+            output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+            return;
+        }
+
+        function success(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            $("#Latitude").val(latitude);
+            $("#Longitude").val(longitude);
+            $('#Elevation').val(position.elevation);
+
+            //TODO: ondrag
+            L.marker([latitude, longitude]).addTo(map);
+
+            map.setView(new L.LatLng(latitude, longitude), 14);
+            output.innerHTML = "";
+        };
+
+        function error() {
+            output.innerHTML = "Unable to retrieve your location";
+        };
+
+        output.innerHTML = "<p>Locating…</p>";
+
+        navigator.geolocation.getCurrentPosition(success, error);
+    }
+</script>

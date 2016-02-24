@@ -8,7 +8,9 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Organisation</h4>
+    <h4>@Html.DisplayFor(model => model.Name)</h4>
+    <hr />
+    <p>@Html.DisplayFor(model => model.Description)</p>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -17,22 +19,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.Owner)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
         </dd>
 
         <dt>

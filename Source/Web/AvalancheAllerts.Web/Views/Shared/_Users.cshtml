@@ -1,0 +1,21 @@
+﻿@model IEnumerable<AvalancheAllerts.Web.ViewModels.User.UserViewModel>
+    
+<table class="table">
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Tests Count</th>
+            <th>Total Memberships</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Tests</td>
+                <td>@user.Organisations</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -12,6 +12,7 @@ namespace AvalancheAllerts.Web.Controllers
     using AvalancheAllerts.Web.Infrastructure.Mapping;
     using AvalancheAllerts.Web.ViewModels.Generic;
     using AvalancheAllerts.Web.ViewModels.Organisation;
+    using AvalancheAllerts.Web.ViewModels.User;
 
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
@@ -83,6 +84,20 @@ namespace AvalancheAllerts.Web.Controllers
 
 
             return View(model);
+        }
+
+        public ActionResult GetUsers(int id)
+        {
+            var users = this.Organisations.GetAll()
+                .To<OrganisationDetailsModel>()
+                .FirstOrDefault(x => x.Id == id)
+                .Users;
+            if (users == null)
+            {
+                return this.HttpNotFound();
+            }
+
+            return this.PartialView("_Users", users);
         }
 
         public ActionResult Details(int id)
@@ -213,7 +228,9 @@ namespace AvalancheAllerts.Web.Controllers
 
             }
 
-            return this.RedirectToAction("Details", new { id = organisation.Id });
+            var result = organisation.Users.AsQueryable().To<UserViewModel>();
+            return this.PartialView("_Users", result);
+            //return this.RedirectToAction("Details", new { id = organisation.Id });
         }
     }
 }

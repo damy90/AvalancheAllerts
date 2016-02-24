@@ -59,29 +59,17 @@
         @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
     }
     | @Ajax.ActionLink("Join", "Join", new { id = Model.Id }, new AjaxOptions()
-         {
-             HttpMethod = "POST"
-         })
+ {
+     UpdateTargetId = "results",
+     InsertionMode = InsertionMode.Replace,
+     HttpMethod = "POST",
+
+ }, new { id = "join" })
     | @Html.ActionLink("Back to List", "Index")
 </p>
 
 <h2>Users</h2>
-<table class="table">
-    <thead>
-    <tr>
-        <th>User Name</th>
-        <th>Tests Count</th>
-        <th>Total Memberships</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var user in Model.Users)
-    {
-        <tr>
-            <td>@user.UserName</td>
-            <td>@user.Tests</td>
-            <td>@user.Organisations</td>
-        </tr>
-    }
-    </tbody>
-</table>
+
+<div id="results">
+    @Html.Action("GetUsers", new {id=Model.Id})
+</div>

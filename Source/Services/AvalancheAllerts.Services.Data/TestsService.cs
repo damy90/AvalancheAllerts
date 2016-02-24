@@ -14,9 +14,12 @@ namespace AvalancheAllerts.Services.Data
     {
         private readonly IDbRepository<Test> tests;
 
-        public TestsService(IDbRepository<Test> tests)
+        private readonly IDbRepository<Organisation> organisations;
+
+        public TestsService(IDbRepository<Test> tests, IDbRepository<Organisation> organisations)
         {
             this.tests = tests;
+            this.organisations = organisations;
         }
 
         public IQueryable<Test> GetAll()
@@ -70,6 +73,10 @@ namespace AvalancheAllerts.Services.Data
         public void Create(Test test)
         {
             this.tests.Add(test);
+            //TODO: add tests to organisation. User is always null. Only user id is set.
+            /*this.tests.Save();
+            var entity = this.GetAll().FirstOrDefault(t => t.Id == test.Id);
+            entity.Organisations = test.User.Organisations;*/
         }
 
         public void Update(Test test)

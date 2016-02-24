@@ -64,11 +64,11 @@ namespace AvalancheAllerts.Web.Controllers
                 var totalPages = (int)Math.Ceiling(organisationsCount / (decimal)pageSize);
                 var itemsToSkip = (page - 1) * pageSize;
                 var organisations = this.Organisations.GetAll()
-                    .Where(x => x.IsDeleted == false)
-                    .OrderBy(x => x.Tests.Count)
+                    .To<OrganisationViewModel>()
+                    .OrderByDescending(x => x.TestsCount)
+                    .ThenBy(x => x.Name)
                     .Skip(itemsToSkip)
                     .Take(pageSize)
-                    .To<OrganisationViewModel>()
                     .ToList();
 
                 model = new ItemsPageModel<OrganisationViewModel>()
@@ -188,18 +188,18 @@ namespace AvalancheAllerts.Web.Controllers
                 ApplicationUser me;
                 var myId = this.User.Identity.GetUserId();
 
-               /* try
-                {
-                     me = this.UserManager.Users
-                    .FirstOrDefault(u => u.Id == myId);
-                }
-                catch (Exception ex)
-                {
-                    
-                    throw ex;
-                }*/
-                
-                
+                /* try
+                 {
+                      me = this.UserManager.Users
+                     .FirstOrDefault(u => u.Id == myId);
+                 }
+                 catch (Exception ex)
+                 {
+
+                     throw ex;
+                 }*/
+
+
                 this.Organisations.Join(organisation.Id, myId);
 
                 try

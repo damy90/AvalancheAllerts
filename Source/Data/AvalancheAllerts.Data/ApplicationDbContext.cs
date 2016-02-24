@@ -57,10 +57,9 @@
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<Organisation>()
                 .HasMany(x => x.Users)
-                .WithMany(u=>u.Organisations)
+                .WithMany(u => u.Organisations)
                 .Map(
                     m =>
                         {

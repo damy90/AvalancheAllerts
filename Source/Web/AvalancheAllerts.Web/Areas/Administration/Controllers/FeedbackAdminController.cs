@@ -41,7 +41,8 @@
                     .ThenBy(x => x.Id)
                     .Skip(itemsToSkip)
                     .Take(ItemsPerPage)
-                    .To<FeedbackViewModel>().ToList();
+                    .To<FeedbackViewModel>()
+                    .ToList();
 
                 viewModel = new FeedBackListViewModel()
                 {

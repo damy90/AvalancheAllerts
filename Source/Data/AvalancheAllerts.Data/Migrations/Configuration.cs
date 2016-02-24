@@ -42,50 +42,6 @@
                 userManager.AddToRole(user.Id, GlobalConstants.AdministratorRoleName);
             }
 
-            context.SaveChanges();
-
-            if (!context.Tests.Any())
-            {
-                var test1 = new Test()
-                {
-                    CreatedOn = DateTime.UtcNow,
-                    DangerLevel = 2,
-                    //avoiding NaN values
-                    Latitude = 42.6042826,
-                    Longitude = 23.3882316,
-                    TestResultsDescription = "Q2, CT7",
-                    Place = "Витоша Платото",
-                    UserId = context.Users.FirstOrDefault().Id
-                };
-                
-                context.Tests.Add(test1);
-                var test2 = new Test()
-                {
-                    CreatedOn = DateTime.UtcNow,
-                    DangerLevel = 5,
-                    Latitude = 42.5940509,
-                    Longitude = 23.3201253,
-                    Altitude = 1900,
-                    TestResultsDescription = "Q0, CT3",
-                    Place = "Витоша Черни Връх",
-                    UserId = context.Users.FirstOrDefault().Id
-                };
-                context.Tests.Add(test2);
-
-                var test3 = new Test()
-                {
-                    CreatedOn = DateTime.UtcNow,
-                    DangerLevel = 1,
-                    Latitude = 42.113862,
-                    Longitude = 23.4967623,
-                    Altitude = 2900,
-                    TestResultsDescription = "Q3, CT13",
-                    Place = "Рила: Маркуджик 3",
-                    UserId = context.Users.FirstOrDefault().Id
-                };
-                context.Tests.Add(test3);
-            }
-
             if (!context.Organisations.Any())
             {
                 var org = new Organisation()
@@ -138,6 +94,53 @@
                 context.Organisations.Add(org);
             }
 
+            context.SaveChanges();
+
+            if (!context.Tests.Any())
+            {
+                var test1 = new Test()
+                {
+                    CreatedOn = DateTime.UtcNow,
+                    DangerLevel = 2,
+                    //avoiding NaN values
+                    Latitude = 42.6042826,
+                    Longitude = 23.3882316,
+                    TestResultsDescription = "Q2, CT7",
+                    Place = "Витоша Платото",
+                    UserId = context.Users.FirstOrDefault().Id,
+                    Organisations = context.Users.FirstOrDefault().Organisations
+                };
+                
+                context.Tests.Add(test1);
+                var test2 = new Test()
+                {
+                    CreatedOn = DateTime.UtcNow,
+                    DangerLevel = 5,
+                    Latitude = 42.5940509,
+                    Longitude = 23.3201253,
+                    Altitude = 1900,
+                    TestResultsDescription = "Q0, CT3",
+                    Place = "Витоша Черни Връх",
+                    UserId = context.Users.FirstOrDefault().Id,
+                    Organisations = context.Users.FirstOrDefault().Organisations
+                };
+                context.Tests.Add(test2);
+
+                var test3 = new Test()
+                {
+                    CreatedOn = DateTime.UtcNow,
+                    DangerLevel = 1,
+                    Latitude = 42.113862,
+                    Longitude = 23.4967623,
+                    Altitude = 2900,
+                    TestResultsDescription = "Q3, CT13",
+                    Place = "Рила: Маркуджик 3",
+                    UserId = context.Users.FirstOrDefault().Id,
+                    Organisations = context.Users.FirstOrDefault().Organisations
+                };
+                context.Tests.Add(test3);
+            }
+            
             try
             {
                 context.SaveChanges();

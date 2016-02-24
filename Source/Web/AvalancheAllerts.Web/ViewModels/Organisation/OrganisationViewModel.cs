@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
 
     using AutoMapper;
 
@@ -16,10 +17,16 @@
 
         public string Owner { get; set; }
 
+        public int TestsCount { get; set; }
+
+        public int UsersCount { get; set; }
+
         public virtual void CreateMappings(IMapperConfiguration configuration)
         {
             configuration.CreateMap<Organisation, OrganisationViewModel>()
-                .ForMember(x => x.Owner, opt => opt.MapFrom(x => x.Owner.Email));
+                .ForMember(x => x.Owner, opt => opt.MapFrom(x => x.Owner.Email))
+                .ForMember(x => x.TestsCount, opt => opt.MapFrom(x => x.Tests.Count))
+                .ForMember(x => x.UsersCount, opt => opt.MapFrom(x => x.Users.Count));
         }
     }
 }

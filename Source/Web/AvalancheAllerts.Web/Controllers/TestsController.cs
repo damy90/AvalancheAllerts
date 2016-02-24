@@ -107,19 +107,26 @@ namespace AvalancheAllerts.Web.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,OwnerId,CreatedOn,ModifiedOn,IsDeleted,DeletedOn")] TestCreateModel organisation)
+        public ActionResult Edit(TestCreateModel test)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
-                var entity = this.Tests.GetAll().To<Test>().FirstOrDefault(x => x.Id == organisation.Id);
+                var entity = this.Tests.GetAll().FirstOrDefault(x => x.Id == test.Id);
                 if (!(this.User.Identity.GetUserName() == entity.User.UserName || this.User.IsInRole(GlobalConstants.AdministratorRoleName)))
                 {
                     //TODO: unauthorized error
                     return this.RedirectToAction("Index", "Home");
                 }
 
+                entity.Altitude = test.Altitude;
+                entity.DangerLevel = test.DangerLevel;
+                entity.Latitude = test.Latitude;
+                entity.Longitude = test.Longitude;
+                entity.TestResultsDescription = test.TestResultsDescription;
+                entity.Place = test.Place;
+
                 this.Tests.Update(entity);
-                this.Tests.SaveChanges();;
+                this.Tests.SaveChanges();
             }
 
             return this.RedirectToAction("Index", "Home");

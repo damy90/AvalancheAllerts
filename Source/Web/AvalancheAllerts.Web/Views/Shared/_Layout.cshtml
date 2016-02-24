@@ -22,11 +22,11 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = string.Empty }, null)</li>
+                    <li>@Html.ActionLink("Organisations", "Index", "Organisations", new { area = string.Empty }, null)</li>
                     @if (Request.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("New Organisation", "Create", "Organisations", new { area = string.Empty }, null)</li>
                         <li>@Html.ActionLink("Submit Test", "Create", "Tests", new { area = string.Empty }, null)</li>
-                        <li>@Html.ActionLink("Organisations", "Index", "Organisations", new { area = string.Empty }, null)</li>
                         <li>@Html.ActionLink("Send Feedback", "Create", "Feedback", new { area = string.Empty }, null)</li>
                         if (User.IsInRole(GlobalConstants.AdministratorRoleName))
                         {

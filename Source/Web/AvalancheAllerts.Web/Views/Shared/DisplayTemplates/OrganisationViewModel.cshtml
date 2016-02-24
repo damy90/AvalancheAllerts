@@ -1,0 +1,60 @@
+﻿@using AvalancheAllerts.Common
+@model IEnumerable<AvalancheAllerts.Web.ViewModels.Organisation.OrganisationViewModel>
+    
+<table class="table">
+    <tr>
+        <th>
+            Owner
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Tests
+        </th>
+        <th>
+            Created On
+        </th>
+        <th>
+            Modified on
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Owner)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(i => item.TestsCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedOn)
+            </td>
+            <td>
+                @if (User.Identity.IsAuthenticated && User.Identity.Name == item.Owner)
+                {
+                    @Html.ActionLink("Edit", "Edit", "Organisations", new { id = item.Id }, null)
+                }
+                @Html.ActionLink("Details", "Details", "Organisations", new { id = item.Id }, null) |
+                @if (User.IsInRole(GlobalConstants.AdministratorRoleName))
+                {
+                    @Html.ActionLink("Delete", "Delete", "OrganisationsAdmin", new { area = "Administration" }, new { id = item.Id })
+                }
+            </td>
+        </tr>
+    }
+</table>

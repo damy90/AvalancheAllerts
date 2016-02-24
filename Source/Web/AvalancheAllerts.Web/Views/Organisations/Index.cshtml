@@ -9,7 +9,7 @@
 <h2>@ViewBag.Title</h2>
 
 @Html.Partial("_OrganisationsTable", Model.Items)
-
+@*@Html.DisplayForModel("OrganisationViewModel", Model.Items)*@
 <nav>
     <ul class="pagination">
         @if (Model.CurrentPage > 1)

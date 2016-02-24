@@ -330,6 +330,8 @@
     <Content Include="Areas\Administration\Views\FeedbackAdmin\Index.cshtml" />
     <Content Include="Views\Tests\Details.cshtml" />
     <Content Include="Views\Shared\_Users.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\OrganisationViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\OrganisationCreateModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

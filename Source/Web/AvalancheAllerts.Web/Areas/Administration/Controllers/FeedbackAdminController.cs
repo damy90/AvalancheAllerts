@@ -51,7 +51,7 @@
                     FeedBacks = feedbacks
                 };
 
-                this.HttpContext.Cache["Feedback page_" + id] = viewModel;
+                //this.HttpContext.Cache["Feedback page_" + id] = viewModel;
             }
 
             return this.View(viewModel);

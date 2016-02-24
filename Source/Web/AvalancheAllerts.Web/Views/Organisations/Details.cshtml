@@ -64,3 +64,24 @@
          })
     | @Html.ActionLink("Back to List", "Index")
 </p>
+
+<h2>Users</h2>
+<table class="table">
+    <thead>
+    <tr>
+        <th>User Name</th>
+        <th>Tests Count</th>
+        <th>Total Memberships</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var user in Model.Users)
+    {
+        <tr>
+            <td>@user.UserName</td>
+            <td>@user.Tests</td>
+            <td>@user.Organisations</td>
+        </tr>
+    }
+    </tbody>
+</table>

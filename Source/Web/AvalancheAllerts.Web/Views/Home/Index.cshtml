@@ -16,11 +16,12 @@
 
     <script type="text/javascript">
         var map;
+        var leafletMap = leafletMap();
         var controlSearch;
 
         $(document).ready(function () {
-            map = buildMap('map');
-            controlSearch = initMapSearch(map);
+            map = leafletMap.initMap('map');
+            controlSearch = leafletMap.initSearch(map);
             
             var radius = $('#radius').val();
             controlSearch.on('search_locationfound', function (data) {
@@ -49,71 +50,31 @@
             function onLocationFound(e) {
                 //var radius = e.accuracy / 2;
 
-                L.marker(e.latlng).addTo(map);
+                //L.marker(e.latlng).addTo(map);
 
-                L.circle(e.latlng, radius).addTo(map);
+                var position= {
+                    Latitude: e.latlng.lat,
+                    Longitude: e.latlng.lng
+                }
+                //L.circle(e.latlng, radius).addTo(map);
 
                 var request = { lat: e.latlng.lat, lon: e.latlng.lng, radius: radius }
                 $.getJSON("/Tests/Nearby", request, function (data) {
                     //printMap(map, data);
-                    onData(data);
+                    data.push(position);
+                    leafletMap.onData(data, true);
                 });
             }
 
             function onLocationError(e) {
                 $.getJSON("/Tests/GetAll", null, function (data) {
                     //printMap(map, data);
-                    onData(data);
+                    leafletMap.onData(data, true);
                 });
             }
 
             map.once('locationfound', onLocationFound);
             map.once('locationerror', onLocationError);
-        }
-
-        var dataMarkers = [];
-        var onData= function (markers) {
-            var dm = this.dataMarkers,
-                markerPlaceIDs = {};
-            var LeafIcon = L.Icon.extend({
-                options: {
-                    //shadowUrl: 'leaf-shadow.png',
-                    iconSize: [50, 36],
-                    //shadowSize: [50, 64],
-                    iconAnchor: [14, 25],
-                    //shadowAnchor: [4, 62],
-                    popupAnchor: [-3, -25]
-                }
-            });
-
-            var dangerLevelIcons = [
-                new LeafIcon({ iconUrl: 'Content/images/1.png' }),
-                new LeafIcon({ iconUrl: 'Content/images/2.png' }),
-                new LeafIcon({ iconUrl: 'Content/images/3.png' }),
-                new LeafIcon({ iconUrl: 'Content/images/4.png' }),
-                new LeafIcon({ iconUrl: 'Content/images/5.png' })
-            ];
-
-            for (var i = 0; i < markers.length; i++)
-                markerPlaceIDs[markers[i].Id] = markers[i];
-
-            //remove all markers that are no longer needed and find which markers are new
-            dm.filter(function (element) {
-                map.removeLayer(element); //delete from the map the markers that are not longer needed
-                return false;
-            });
-
-            //add the new markers (only new markers are left in markerPlaceIDs)
-            for (var pid in markerPlaceIDs) {
-                var marker = markerPlaceIDs[pid];
-                var m = L.marker([marker.Latitude, marker.Longitude],{ icon: dangerLevelIcons[marker.DangerLevel - 1] }).addTo(this.map);
-                dm.push(m);
-                m.bindPopup(marker.Place + '<br/><a href="Tests/Details/' + marker.Id + '">Details</a>');
-            }
-
-            var group = new L.featureGroup(dm);
-
-            map.fitBounds(group.getBounds());
         }
     </script>
 </div>

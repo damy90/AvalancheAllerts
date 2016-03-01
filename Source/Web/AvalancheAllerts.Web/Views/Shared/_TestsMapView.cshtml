@@ -6,36 +6,8 @@
 <script src="~/Scripts/lib/leaflet-search.js"></script>
 <link rel="stylesheet" href="http://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.css" />
 <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false"></script>
+<script src="~/Scripts/lib/leaflet-map.js"></script>
+
 <div>
     <div id="map"></div>
 </div>
-
-<script>
-    function buildMap(elementId) {
-        L.mapbox.accessToken = 'pk.eyJ1IjoiZGFueTkwdG0iLCJhIjoiY2lpMGE3eW8xMDBjYXcxa3N1NjdvdHd3NiJ9.h83bG5gr14GXwhGrODE-Mw';
-        var map = L.mapbox.map(elementId, 'mapbox.streets');
-        //var map = new L.Map('map', { zoom: 9, center: new L.latLng([41.575730, 13.002411]) });
-        //map.addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'));	//base layer
-
-        return map;
-    }
-
-    function initMapSearch(map) {
-        var controlSearch = new L.Control.Search({
-            url: 'http://nominatim.openstreetmap.org/search?format=json&q={s}',
-            jsonpParam: 'json_callback',
-            propertyName: 'display_name',
-            propertyLoc: ['lat', 'lon'],
-            circleLocation: false,
-            markerLocation: true,
-            autoType: true,
-            autoCollapse: true,
-            minLength: 3,
-            zoom: 10
-        });
-
-        map.addControl(controlSearch);
-
-        return controlSearch;
-    }
-</script>

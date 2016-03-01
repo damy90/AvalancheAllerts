@@ -73,11 +73,12 @@
 </div>
 
 <script>
-    var map;
+    var map,
+        leafletMap = leafletMap();
     //var controlSearch;
 
     $(document).ready(function () {
-        map = buildMap('map');
+        map = leafletMap.initMap('map');
         //controlSearch = initMapSearch(map);
 
         //var radius = $('#radius').val();
@@ -105,9 +106,14 @@
             $('#Elevation').val(position.elevation);
 
             //TODO: ondrag
-            L.marker([latitude, longitude]).addTo(map);
 
-            map.setView(new L.LatLng(latitude, longitude), 14);
+            var marker = {
+                Latitude: latitude,
+                Longitude: longitude
+            }
+
+            leafletMap.onData([marker]);
+
             output.innerHTML = "";
         };
 

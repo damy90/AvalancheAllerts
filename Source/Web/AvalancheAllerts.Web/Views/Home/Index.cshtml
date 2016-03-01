@@ -55,38 +55,65 @@
 
                 var request = { lat: e.latlng.lat, lon: e.latlng.lng, radius: radius }
                 $.getJSON("/Tests/Nearby", request, function (data) {
-                    printMap(map, data);
+                    //printMap(map, data);
+                    onData(data);
                 });
             }
 
             function onLocationError(e) {
                 $.getJSON("/Tests/GetAll", null, function (data) {
-                    printMap(map, data);
+                    //printMap(map, data);
+                    onData(data);
                 });
             }
 
             map.once('locationfound', onLocationFound);
             map.once('locationerror', onLocationError);
+        }
 
-            /*if (!navigator.geolocation) {
-                output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
-                return;
-            }*/
-            /*function success(position) {
-                
-                var request = { lat: position.coords.latitude, lon: position.coords.longitude, radius: radius }
-                $.getJSON("/Tests/Nearby", request, function(data) {
-                    printMap(map, data);
-                });
-            };
+        var dataMarkers = [];
+        var onData= function (markers) {
+            var dm = this.dataMarkers,
+                markerPlaceIDs = {};
+            var LeafIcon = L.Icon.extend({
+                options: {
+                    //shadowUrl: 'leaf-shadow.png',
+                    iconSize: [50, 36],
+                    //shadowSize: [50, 64],
+                    iconAnchor: [14, 25],
+                    //shadowAnchor: [4, 62],
+                    popupAnchor: [-3, -25]
+                }
+            });
 
-            function error() {
-                $.getJSON("/Tests/GetAll", null, function(data) {
-                    printMap(map, data);
-                });
-            };
+            var dangerLevelIcons = [
+                new LeafIcon({ iconUrl: 'Content/images/1.png' }),
+                new LeafIcon({ iconUrl: 'Content/images/2.png' }),
+                new LeafIcon({ iconUrl: 'Content/images/3.png' }),
+                new LeafIcon({ iconUrl: 'Content/images/4.png' }),
+                new LeafIcon({ iconUrl: 'Content/images/5.png' })
+            ];
 
-            navigator.geolocation.getCurrentPosition(success, error);*/
+            for (var i = 0; i < markers.length; i++)
+                markerPlaceIDs[markers[i].Id] = markers[i];
+
+            //remove all markers that are no longer needed and find which markers are new
+            dm.filter(function (element) {
+                map.removeLayer(element); //delete from the map the markers that are not longer needed
+                return false;
+            });
+
+            //add the new markers (only new markers are left in markerPlaceIDs)
+            for (var pid in markerPlaceIDs) {
+                var marker = markerPlaceIDs[pid];
+                var m = L.marker([marker.Latitude, marker.Longitude],{ icon: dangerLevelIcons[marker.DangerLevel - 1] }).addTo(this.map);
+                dm.push(m);
+                m.bindPopup(marker.Place + '<br/><a href="Tests/Details/' + marker.Id + '">Details</a>');
+            }
+
+            var group = new L.featureGroup(dm);
+
+            map.fitBounds(group.getBounds());
         }
     </script>
 </div>

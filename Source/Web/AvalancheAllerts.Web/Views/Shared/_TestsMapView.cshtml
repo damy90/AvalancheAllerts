@@ -38,48 +38,4 @@
 
         return controlSearch;
     }
-    function printMap(map, tests) {
-        /*L.mapbox.accessToken = 'pk.eyJ1IjoiZGFueTkwdG0iLCJhIjoiY2lpMGE3eW8xMDBjYXcxa3N1NjdvdHd3NiJ9.h83bG5gr14GXwhGrODE-Mw';
-        var map = L.mapbox.map('map', 'mapbox.streets');*/
-
-
-        //position
-        map.locate({
-            setView: false,
-            maxZoom: 16
-        });
-
-        var LeafIcon = L.Icon.extend({
-            options: {
-                //shadowUrl: 'leaf-shadow.png',
-                iconSize: [50, 36],
-                //shadowSize: [50, 64],
-                iconAnchor: [14, 25],
-                //shadowAnchor: [4, 62],
-                popupAnchor: [-3, -25]
-            }
-        });
-
-        var dangerLevelIcons = [
-            new LeafIcon({ iconUrl: 'Content/images/1.png' }),
-            new LeafIcon({ iconUrl: 'Content/images/2.png' }),
-            new LeafIcon({ iconUrl: 'Content/images/3.png' }),
-            new LeafIcon({ iconUrl: 'Content/images/4.png' }),
-            new LeafIcon({ iconUrl: 'Content/images/5.png' })
-        ];
-
-        L.icon = function (options) {
-            return new L.Icon(options);
-        };
-
-        var group = [];
-        for (var i in tests) {
-            group[i] = L.marker([tests[i].Latitude, tests[i].Longitude], { icon: dangerLevelIcons[tests[i].DangerLevel - 1] }).addTo(map)
-                .bindPopup(tests[i].Place + '<br/><a href="Tests/Details/' + tests[i].Id + '">Details</a>');
-        }
-
-        group = new L.featureGroup(group);
-
-        map.fitBounds(group.getBounds());
-    }
 </script>

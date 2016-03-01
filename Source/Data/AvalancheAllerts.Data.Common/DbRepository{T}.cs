@@ -8,6 +8,7 @@
     using AvalancheAllerts.Data.Common.Models;
 
     // TODO: Why BaseModel<int> instead BaseModel<TKey>?
+    // TODO: inherit GeneralRepository
     public class DbRepository<T> : IDbRepository<T>
         where T : BaseModel<int>
     {
@@ -22,9 +23,9 @@
             this.DbSet = this.Context.Set<T>();
         }
 
-        private IDbSet<T> DbSet;
+        private readonly IDbSet<T> DbSet;
 
-        private DbContext Context { get; }
+        private readonly DbContext Context;
 
         public IQueryable<T> All()
         {

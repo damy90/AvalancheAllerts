@@ -23,9 +23,9 @@ namespace AvalancheAllerts.Data.Common
             this.DbSet = this.Context.Set<T>();
         }
 
-        private IDbSet<T> DbSet { get; }
+        private readonly IDbSet<T> DbSet;
 
-        private DbContext Context { get; }
+        private readonly DbContext Context;
 
         public IQueryable<T> AllWithDeleted()
         {

@@ -22,7 +22,7 @@
             this.DbSet = this.Context.Set<T>();
         }
 
-        private IDbSet<T> DbSet { get; }
+        private IDbSet<T> DbSet;
 
         private DbContext Context { get; }
 

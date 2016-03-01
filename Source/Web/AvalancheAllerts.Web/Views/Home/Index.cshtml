@@ -60,16 +60,14 @@
 
                 var request = { lat: e.latlng.lat, lon: e.latlng.lng, radius: radius }
                 $.getJSON("/Tests/Nearby", request, function (data) {
-                    //printMap(map, data);
                     data.push(position);
-                    leafletMap.onData(data, true);
+                    leafletMap.onData(data);
                 });
             }
 
             function onLocationError(e) {
                 $.getJSON("/Tests/GetAll", null, function (data) {
-                    //printMap(map, data);
-                    leafletMap.onData(data, true);
+                    leafletMap.onData(data);
                 });
             }
 

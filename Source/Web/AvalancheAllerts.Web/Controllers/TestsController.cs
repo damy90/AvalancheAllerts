@@ -15,9 +15,12 @@ namespace AvalancheAllerts.Web.Controllers
     using AvalancheAllerts.Services.Data;
     using AvalancheAllerts.Web.Infrastructure.Mapping;
     using AvalancheAllerts.Web.ViewModels;
+    using AvalancheAllerts.Web.ViewModels.Organisation;
     using AvalancheAllerts.Web.ViewModels.Test;
 
     using Microsoft.AspNet.Identity;
+
+    using WebGrease.Css.Extensions;
 
     public class TestsController : BaseController
     {
@@ -42,6 +45,32 @@ namespace AvalancheAllerts.Web.Controllers
             var result = this.Tests.FilterRadius(currentPosition, radius * 1000).Where(t => t.IsDeleted == false).To<TestViewModel>().ToList(); //to meters
 
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Filter(double lat, double lon, int radius, List<int> organisations)
+        {
+            var currentPosition = new GeoCoordinate(lat, lon);
+            //var orgIds = organisations.Select(x => x.Id);
+            var tests = this.Tests
+                .FilterRadius(currentPosition, radius * 1000)
+                .Where(t => t.Organisations.Select(o => o.Id).Any(x => organisations.Contains(x)))
+                .To<TestViewModel>()
+                .ToList();
+
+            /*var result=new List<Test>();
+            foreach (var test in tests)
+            {
+                foreach (var organisation in test.Organisations)
+                {
+                    if (organisations.Select(x => x.Id).Contains(organisation.Id))
+                    {
+                        result.Add(test);
+                        break;
+                    }
+                }
+            }*/
+
+            return Json(tests, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Create()

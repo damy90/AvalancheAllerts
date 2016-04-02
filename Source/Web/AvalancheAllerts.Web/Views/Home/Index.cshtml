@@ -1,78 +1,90 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Home Page";
 }
 
 <h1>Crowd sourced avalaunche buletin</h1>
 
-@model List<AvalancheAllerts.Data.Models.Test>
+@model List<AvalancheAllerts.Web.ViewModels.Organisation.OrganisationSelectListModel>
 
-<h2 class="text-danger">The informarion is provided as is without any guarantee</h2>
-<p>The information is maintained by volunteers. It is not an official avalaunche buletin. Please check the official avalaunche buletin for uoyr resort if there is one.</p>
-<div class="row">
-    <input type="number" id="radius" value="50"/>
-    <button id="filter">Filter</button>
-    @Html.Partial("_TestsMapView")
+    @*<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/ui-lightness/jquery-ui.css" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+    <script src="~/Scripts/lib/jquery.multisellect.js"></script>*@
+    <h2 class="text-danger">The informarion is provided as is without any guarantee</h2>
+    <p>The information is maintained by volunteers. It is not an official avalaunche buletin. Please check the official avalaunche buletin for uoyr resort if there is one.</p>
+    <div class="row">
+        @using (Ajax.BeginForm("Filter", "Tests",  null, new AjaxOptions { OnSuccess = "updateMap", HttpMethod = "POST" }, new { @class = "form-horizontal", role = "form" }))
+        {
+        @Html.Label("radius", "Search radius in km.")
+        @Html.Editor("radius", new { htmlAttributes = new { @class = "form-control", @Value = "50" } })
+        @Html.Label("organisations", "Shown organisations")
+        @Html.DropDownList("organisations", new MultiSelectList(Model, "Id", "Name", Model.Select(m => m.Id)), new { multiple = "multiple", @class = "selectpicker", @data_actions_box = "true" })
 
-    <script type="text/javascript">
-        var map;
-        var leafletMap = leafletMap();
-        var controlSearch;
+        @Html.Hidden("lat")
+        @Html.Hidden("lon")
 
-        $(document).ready(function () {
-            map = leafletMap.initMap('map');
-            controlSearch = leafletMap.initSearch(map);
-            
-            var radius = $('#radius').val();
-            controlSearch.on('search_locationfound', function (data) {
-                ShowNearby(radius, data);
-            });
+        <div class="form-group">
+            <input id="filter" type="submit" value="Filter" class="btn btn-default" />
+        </div>
+        }
 
-            ShowNearby(radius);
-        });
+        @Html.Partial("_TestsMapView")
 
-        $('#filter').click(function() {
-            var radius = $('#radius').val();
-            ShowNearby(radius);
-        });
+        <script type="text/javascript">
+            /*$(function () {
+                $("#organisations").multiselect();
+            });*/
 
-        function ShowNearby(radius, position) {
+            var map;
+            var leafletMap = leafletMap();
+            var controlSearch;
 
-            if (!position) {
+            $(document).ready(function() {
+                map = leafletMap.initMap('map');
+                controlSearch = leafletMap.initSearch(map);
+
+                var radius = $('#radius').val();
+
                 map.locate({
                     setView: false,
                     maxZoom: 16
                 });
-            } else {
-                onLocationFound(position);
-            }
 
-            function onLocationFound(e) {
-                //var radius = e.accuracy / 2;
-
-                //L.marker(e.latlng).addTo(map);
-
-                var position= {
-                    Latitude: e.latlng.lat,
-                    Longitude: e.latlng.lng
+                function onLocationFound(e) {
+                    ShowNearby(radius, e);
                 }
-                //L.circle(e.latlng, radius).addTo(map);
+
+                function onLocationError(e) {
+                    $.getJSON("/Tests/GetAll", null, function(data) {
+                        leafletMap.onData(data);
+                    });
+                }
+
+                map.once('locationfound', onLocationFound);
+                map.once('locationerror', onLocationError);
+
+                controlSearch.on('search_locationfound', function(e) {
+                    ShowNearby(radius, e);
+                });
+            });
+
+            function ShowNearby(radius, e) {
+                $('#lat').val(e.latlng.lat);
+                $('#lon').val(e.latlng.lng);
 
                 var request = { lat: e.latlng.lat, lon: e.latlng.lng, radius: radius }
-                $.getJSON("/Tests/Nearby", request, function (data) {
-                    data.push(position);
-                    leafletMap.onData(data);
+                $.getJSON("/Tests/Nearby", request, function(data) {
+                    updateMap(data);
                 });
             }
 
-            function onLocationError(e) {
-                $.getJSON("/Tests/GetAll", null, function (data) {
-                    leafletMap.onData(data);
-                });
-            }
+            function updateMap(data) {
+                var position = {
+                    Latitude: $('#lat').val(),
+                    Longitude: $('#lon').val()
+                }
 
-            map.once('locationfound', onLocationFound);
-            map.once('locationerror', onLocationError);
-        }
-    </script>
-</div>
+                data.push(position);
+                leafletMap.onData(data);
+            }
+        </script>
+    </div>

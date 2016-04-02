@@ -22,4 +22,8 @@ select,
 textarea {
     max-width: 280px;
 }
-#map { height: 580px; }
+
+#map {
+    height: 580px;
+    max-width: 90%;
+}

@@ -15,7 +15,7 @@
         @using (Ajax.BeginForm("Filter", "Tests",  null, new AjaxOptions { OnSuccess = "updateMap", HttpMethod = "POST" }, new { @class = "form-horizontal", role = "form" }))
         {
         @Html.Label("radius", "Search radius in km.")
-        @Html.Editor("radius", new { htmlAttributes = new { @class = "form-control", @Value = "50" } })
+        @Html.Editor("radius", new { htmlAttributes = new {@Value = "50" } })
         @Html.Label("organisations", "Shown organisations")
         @Html.DropDownList("organisations", new MultiSelectList(Model, "Id", "Name", Model.Select(m => m.Id)), new { multiple = "multiple", @class = "selectpicker", @data_actions_box = "true" })
 
